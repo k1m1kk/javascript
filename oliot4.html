@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+ <title>oliot4</title>
+</head>
+<body>
+
+<script>
+class Pankki {
+  constructor(tilinumero) {
+   this.tilinumero = tilinumero;
+   this.saldo = 0;
+   this.historia = [];
+}
+
+talleta(summa) {
+  let saldoEnnen = this.saldo;
+  this.saldo += summa;
+
+  this.historia.push({
+   paiva: new Date(),
+   tapahtuma: "talletus",
+   summa: summa,
+   saldoEnnen: saldoEnnen
+ });
+
+}
+
+nosta(summa) {
+  if (summa > this.saldo) {
+   console.log("Nosto epäonnistui: ei tarpeeksi saldoa");
+   return;
+ }
+
+ let saldoEnnen = this.saldo;
+ this.saldo -= summa;
+
+ this.historia.push({
+  paiva: new Date(),
+  tapahtuma: "Nosto",
+  summa: summa,
+  saldoEnnen: saldoEnnen
+ });
+
+}
+
+naytaTiedot() {
+  document.write("<h3>Pankkitilin tiedot</h3>");
+  document.write("Tilinumero: " + this.tilinumero + "<br>");
+  document.write("Saldo: " + this.saldo + " €<br><br>");
+  this.naytaHistoria();
+}
+
+naytaHistoria() {
+  document.write("<h4>Tapahtumahistoria</h4>");
+
+  if (this.historia.length === 0) {
+    document.write("Ei tapahtumia<br>");
+    return;
+}
+
+ for (let tapahtuma of this.historia) {
+   document.write(
+    tapahtuma.paiva.toLocaleString() + " | " +
+    tapahtuma.tapahtuma + " | " +
+    tapahtuma.summa + " € | " +
+    "Saldo ennen " + tapahtuma.saldoEnnen + " €<br>"
+    );
+
+   }
+
+  }
+
+ }
+
+
+let tili = new Pankki("FI12 3456 7890 1234");
+
+tili.talleta(500);
+tili.nosta(120);
+tili.nosta(600);
+tili.talleta(200);
+
+tili.naytaTiedot();
+</script>
+
+</body>
+</html>
+
+  
