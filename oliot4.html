@@ -34,7 +34,25 @@ nosta(summa) {
 
  let saldoEnnen = this.saldo;
  this.saldo -= summa;
+ }
+}
+ class TarkistavaPankki extends Pankki {
 
+onkoTarpeeksiRahaa(summa) {
+  return this.saldo >= summa;
+}
+
+onkoTilinumeroKelvollinen() {
+  return this.tilinumero.length >= 10;
+ }
+}
+
+let tili = new TarkistavaPankki("FI1234567890");
+tili.talleta(300)
+
+console.log(tili.onkoTarpeeksiRahaa(200));
+console.log(tili.onkoTilinumeroKelvollinen());
+ 
  this.historia.push({
   paiva: new Date(),
   tapahtuma: "Nosto",
@@ -86,5 +104,6 @@ tili.naytaTiedot();
 
 </body>
 </html>
+
 
   
