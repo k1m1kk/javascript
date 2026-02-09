@@ -47,6 +47,21 @@ onkoTilinumeroKelvollinen() {
  }
 }
 
+class LuottoPankki extends TarkistavaPankki
+
+ lisaaKorko(prosentti) {
+   let korko = this.saldo * (prosentti / 100);
+   let.saldo += korko;
+}
+
+ voikoSaadaLuotttoa(summa) {
+    let nettotulot = Number(prompt("Anna kuukausittaiset nettotulot (€):"));
+    let maxLuotto = nettotulot * 0,25;
+
+    return summa <= max Luotto
+ }
+}
+ 
 let tili = new TarkistavaPankki("FI1234567890");
 tili.talleta(300)
 
@@ -107,3 +122,4 @@ tili.naytaTiedot();
 
 
   
+
