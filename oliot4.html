@@ -61,6 +61,68 @@ class LuottoPankki extends TarkistavaPankki
     return summa <= max Luotto
  }
 }
+
+class LaajennettuPankki extend Pankki
+
+
+ laskeTuotto() {
+   let vuodet = Number(prompt("Anna vuosien määrä"));
+   let saldo = this.saldo;
+
+  for (let i = 0; i < vuodet; i++) {
+    saldo *= 1.01;
+  }
+
+  return saldo - this.saldo;
+ }
+
+
+suurinSaldo() {
+  let max = this.saldo;
+
+  for (let tapahtuma of this.historia) {
+    if (tapahtuma.saldoEnnen > max) {
+      max = tapahtuma.saldoEnnen;
+    }
+  }
+ return max
+}
+
+
+kuukausiYhteenveto(kuukausi) {
+ let talletukset = 0;
+ let nostot = 0;
+
+ for (let t of this.historia) {
+  if (t.paiva.getMonth() === kuukausi) {
+   if (t.tapahtuma === "Talletus") {
+     talletukset += t.summa;
+   }
+   if (t.tapahtuma === "Nostot") {
+    nostot += t.summa;
+   }
+  }
+ }
+
+ return {
+  talletukset: talletukset
+   nostot: nostot
+ };
+}
+
+
+tallennaTiedostoon() {
+ cons fs = require("fs");
+
+ cons data = {
+  tilinumero: this.saldo,
+  saldo: this.saldo,
+  historia: this.historia
+ };
+
+ fs.writeFileSync("tili.json", JSON.stringfy(data, null, 2));
+ }
+ }
  
 let tili = new TarkistavaPankki("FI1234567890");
 tili.talleta(300)
@@ -122,4 +184,5 @@ tili.naytaTiedot();
 
 
   
+
 
